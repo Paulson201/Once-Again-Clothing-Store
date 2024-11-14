@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Once Again Clothing</title>
+    <link rel="icon" href="img/icons8-hanger-50.png" type="image/x-icon">
+    <link rel="icon" sizes="32x32" href="img/icons8-hanger-50.png" type="image/png">
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #14501e;
+        }
+
+        /* Header */
+        header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background-color: #14501e;
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: black;
+        }
+
+        nav a {
+            margin: 0 15px;
+            color: black;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #341875;
+        }
+
+        .icons {
+            display: flex;
+            align-items: center;
+        }
+
+        .cart-icon {
+            font-size: 1.2em;
+            margin-right: 15px;
+        }
+
+        .search-bar {
+            padding: 5px;
+            font-size: 1em;
+        }
+
+        /* Banner */
+        #banner {
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #banner img {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            opacity: 0;
+            transition: opacity 1s;
+            object-fit: cover;
+        }
+
+        #banner img.active {
+            opacity: 1;
+        }
+
+        /* Banner Text Overlay */
+        .banner-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 10px 20px;
+            font-weight: bold;
+            font-size: 2em;
+            color: black;
+            text-align: center;
+            z-index: 10;
+        }
+
+        /* Brands Section */
+        .brands {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: #030503;
+            padding: 15px 0;
+            width: 100%;
+        }
+
+        .brands img {
+            max-width: 100px;
+            filter: brightness(0) invert(1); /* Make logos white */
+        }
+       
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <a href="index.html"><img src="img/AA.png" alt="Once Again Clothing"  width="100px" height="100px"></a>
+        <nav>
+            <a href="womens.html">WOMEN</a>
+            <a href="mens.html">MEN</a>
+            <a href="children.html">CHILDREN</a>
+            <a href="contact.html">CONTACT US</a>
+            <a href="cart.html"><img src="img/shopping-cart.png" width="30px" height="30px" alt="Shopping Cart"></a>
+            <a href="search.html">SEARCH</a>
+        </nav>
+       
+    </header>
+
+    <!-- Banner Section with Carousel -->
+    <div id="banner">
+        <div class="banner-text">FIND CLOTHES THAT MATCH YOUR STYLE</div>
+        <img src="img/banner_1.jpg" class="active" alt="Banner Image 1">
+        <img src="img/banner_2.jpg" alt="Banner Image 2">
+        <img src="img/banner_3.jpg" alt="Banner Image 3">
+        <img src="img/banner_4.jpg" alt="Banner Image 4">
+        <img src="img/banner_5.jpg" alt="Banner Image 5">
+        <img src="img/banner_6.jpg" alt="Banner Image 6">
+    </div>
+    <!-- JavaScript for Image Carousel -->
+    <script>
+        const images = document.querySelectorAll('#banner img');
+        let currentIndex = 0;
+
+        function changeImage() {
+            images[currentIndex].classList.remove('active');
+            currentIndex = (currentIndex + 1) % images.length;
+            images[currentIndex].classList.add('active');
+        }
+
+        setInterval(changeImage, 15000); // Change image every 15 seconds
+    </script>
+    <!-- Product Container -->
+  <div id="productContainer" class="product-container"></div>
+
+  <!-- Footer Section -->
+  
+
+  <script>
+    // Sample product data for different categories
+    const products = {
+      women: [
+        { name: "Women Dress - Nike", image: "https://example.com/nike-dress.jpg" },
+        { name: "Women Sportswear, Polyester - Nike", image: "https://example.com/nike-sportswear.jpg" },
+        { name: "Women's Dress - Nike", image: "https://example.com/nike-dress-2.jpg" },
+        { name: "NikeCourt Slam Women's Dress", image: "https://example.com/nikecourt-dress.jpg" }
+      ],
+      men: [
+        { name: "Men's Jacket - Adidas", image: "https://example.com/adidas-jacket.jpg" },
+        { name: "Men's Sneakers - Nike", image: "https://example.com/nike-sneakers.jpg" },
+        { name: "Men's T-Shirt - Puma", image: "https://example.com/puma-tshirt.jpg" },
+        { name: "Men's Shorts - Reebok", image: "https://example.com/reebok-shorts.jpg" }
+      ],
+      children: [
+        { name: "Kids Dress - Disney", image: "https://example.com/disney-dress.jpg" },
+        { name: "Kids Sneakers - Converse", image: "https://example.com/converse-sneakers.jpg" },
+        { name: "Kids T-Shirt - Marvel", image: "https://example.com/marvel-tshirt.jpg" },
+        { name: "Kids Shorts - Nickelodeon", image: "https://example.com/nickelodeon-shorts.jpg" }
+      ]
+    };
+
+    let currentCategory = 'women'; // Default category
+
+    // Function to display products
+    function displayProducts(filteredProducts) {
+      const productContainer = document.getElementById('productContainer');
+      productContainer.innerHTML = ''; // Clear previous products
+
+      filteredProducts.forEach(product => {
+        const productDiv = document.createElement('div');
+        productDiv.classList.add('product');
+        productDiv.innerHTML = `
+          <img src="${product.image}" alt="${product.name}">
+          <h3>${product.name}</h3>
+        `;
+        productDiv.onclick = () => alert(`Viewing ${product.name}`);
+        productContainer.appendChild(productDiv);
+      });
+    }
+
+    // Function to filter products by category
+    function filterProducts(category) {
+      currentCategory = category;
+      displayProducts(products[category]);
+      document.querySelectorAll('.nav-links a').forEach(link => {
+        link.classList.remove('active');
+      });
+      document.querySelector(`.nav-links a[onclick="filterProducts('${category}')"]`).classList.add('active');
+    }
+
+    // Display all products in the default category initially
+    displayProducts(products[currentCategory]);
+
+    // Function to search for products
+    function searchProducts() {
+      const query = document.getElementById('searchBar').value.toLowerCase();
+      const filteredProducts = products[currentCategory].filter(product =>
+        product.name.toLowerCase().includes(query)
+      );
+      displayProducts(filteredProducts);
+    }
+  </script>
+
+ 
+
+</body>
+<footer>
+<!--<section class="brands">
+        <img src="img/versacee.png" height="100px" width="100px "alt="Versace">
+        <img src="i" height="100px" width="100px" alt="Nike">
+        <img src="i" height="100px" width="100px" alt="Adidas">
+        <img src="" height="100px" width="100px" alt="Prada">
+        <img src="" height="100px" width="100px" alt="GalxBoy">
+    </section>-->
+    <div class="footer">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Versace_logo.svg/2560px-Versace_logo.svg.png" alt="Versace" />
+    <img src="https://1000logos.net/wp-content/uploads/2017/05/Nike-Logo.png" alt="Nike" />
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Adidas_Logo.svg/2048px-Adidas_Logo.svg.png" alt="Adidas" />
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Prada-Logo.svg/2560px-Prada-Logo.svg.png" alt="Prada" />
+    <img src="https://galxboy.com/wp-content/uploads/2022/08/Galxboy-white-logo.png" alt="GalxBoy" />
+  </div>
+</footer>
+</html>
+
